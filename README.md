@@ -19,5 +19,7 @@ pip3 install -r requirements.txt
 
 ### Usage
 - Change to the directory of desired terraform state
-- Run `tf-slack`
+- Run `tf-slack --slack-channel CHANNELNAME`
 - Plan will run and then post to desired slack_channel
+
+Alternatively, you can also specify the $TFSLACK_CHANNEL environment variable in your local environment to set a default for your environment.
