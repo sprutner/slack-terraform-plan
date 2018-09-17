@@ -1,11 +1,12 @@
 # Tool to notify a slack channel of your terraform plans
 
-## Use case: Submitting plans to #server automatically
+## Use case: Submitting Terraform Plans as a snippet to a desired slack channel automatically
 
 
 ### Requirements
 - Python3
 - Terraform
+- SLACK API Token set as a local env var. (E.G. SLACK_API_TOKEN=abcdefgh...)
 
 ### Installation
 - Install required dependencies
