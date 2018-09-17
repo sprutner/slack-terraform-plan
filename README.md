@@ -6,7 +6,7 @@
 ### Requirements
 - Python3
 - Terraform
-- SLACK API Token set as a local env var. (E.G. SLACK_API_TOKEN=abcdefgh...)
+- Slack API Token set as a local env var. (E.G. SLACK_API_TOKEN=abcdefgh...)
 
 ### Installation
 - Install required dependencies
