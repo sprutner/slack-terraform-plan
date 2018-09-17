@@ -7,6 +7,7 @@ from python_terraform import *
 
 # INIT
 slack_token = os.environ["SLACK_API_TOKEN"]
+slack_channel = 'slackbottesting'
 sc = SlackClient(slack_token)
 # Get current PWD
 cwd = os.getcwd()
@@ -35,8 +36,9 @@ def upload_snippet(slack_channel, snippet):
     )
 
 if __name__ == "__main__":
-    print(cwd)
     tf = init_terraform(cwd)
+    print('Running Terraform Plan...')
     run_terraform_plan(tf)
     # post_message('slackbottesting', run_terraform_plan(tf))
-    upload_snippet('slackbottesting', run_terraform_plan(tf))
+    print(f'Uploading snippet to #{slack_channel}')
+    upload_snippet(slack_channel, run_terraform_plan(tf))
