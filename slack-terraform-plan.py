@@ -4,13 +4,32 @@ import os
 import shutil
 from slackclient import SlackClient
 from python_terraform import *
+import argparse
 
 # INIT
 slack_token = os.environ["SLACK_API_TOKEN"]
-slack_channel = 'slackbottesting'
+
 sc = SlackClient(slack_token)
 # Get current PWD
 cwd = os.getcwd()
+
+def set_slack_channel(slack_channel='slackbottesting'):
+    if "TFSLACK_CHANNEL" in os.environ:
+        slack_channel = os.environ["TFSLACK_CHANNEL"]
+    else:
+        print(f"TFSLACK_CHANNEL environment variable not set, setting to #{slack_channel}")
+
+    return slack_channel
+
+def parse_arguments(help=False):
+    #argpase init
+    parser = argparse.ArgumentParser('tf-slack')
+    parser.add_argument('--slack-channel')
+    result, unknown = parser.parse_known_args()
+    if help == True:
+        return parser.print_help(sys.stderr)
+    else:
+        return result
 
 def init_terraform(tf_state_directory):
     tf = Terraform(working_dir=tf_state_directory)
@@ -36,6 +55,13 @@ def upload_snippet(slack_channel, snippet):
     )
 
 if __name__ == "__main__":
+    # Parse arguments
+    args = parse_arguments()
+    if args.slack_channel is not None:
+        slack_channel = set_slack_channel(args.slack_channel)
+    else:
+        slack_channel = set_slack_channel()
+    # Initialize
     tf = init_terraform(cwd)
     print('Running Terraform Plan...')
     run_terraform_plan(tf)
